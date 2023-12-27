@@ -2,6 +2,8 @@ import { CapturerProvider } from "./contexts/CapturerContext";
 import reactLogo from "./assets/react.svg";
 import Canvas from "./components/Canvas";
 import CaptureButton from "./components/CaptureButton";
+import FrameScrubber from "./components/FrameScrubber";
+import FrameScrubberToggleButton from "./components/FrameScrubberToggleButton";
 import "./App.scss";
 
 function App() {
@@ -26,7 +28,11 @@ function App() {
           </div>
         </div>
         <Canvas draw={draw} />
-        <CaptureButton />
+        <div style={{ display: 'flex', gap: '8px' }}>
+          <CaptureButton />
+          <FrameScrubberToggleButton />
+        </div>
+        <FrameScrubber />
       </div>
     </CapturerProvider>
   );
