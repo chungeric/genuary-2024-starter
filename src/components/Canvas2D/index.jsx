@@ -15,7 +15,7 @@ import { useContext, useEffect, useRef } from 'react';
 import { resizeCanvas } from './helpers/resizeCanvas';
 import { CapturerContext, NUM_FRAMES } from '../../contexts/CapturerContext';
 
-const Canvas = (props) => {
+const Canvas2D = (props) => {
   const { draw, ...rest } = props;
   const canvasRef = useRef(null);
   const { recording, setRecording, capturer, scrubberFrame, useScrubber } = useContext(CapturerContext);
@@ -74,4 +74,4 @@ const Canvas = (props) => {
   return <canvas ref={canvasRef} {...rest} />;
 };
 
-export default Canvas;
+export default Canvas2D;

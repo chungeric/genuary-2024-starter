@@ -1,9 +1,10 @@
 import { CapturerProvider } from "./contexts/CapturerContext";
 import reactLogo from "./assets/react.svg";
-import Canvas from "./components/Canvas";
+import Canvas2D from "./components/Canvas2D";
 import CaptureButton from "./components/CaptureButton";
 import FrameScrubber from "./components/FrameScrubber";
 import FrameScrubberToggleButton from "./components/FrameScrubberToggleButton";
+import { drawCircle, drawGrid } from "./helpers/canvas2d/draw";
 import "./App.scss";
 
 function App() {
@@ -11,8 +12,15 @@ function App() {
     ctx.fillStyle = "white";
     ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
     ctx.fillStyle = "black";
+    ctx.strokeStyle = 'black';
+    drawGrid(ctx, 20, 20, 0.2);
     ctx.beginPath();
-    ctx.arc(ctx.canvas.width / 2, ctx.canvas.height / 2, 20 * Math.sin(frameCount * 0.05) ** 2, 0, 2 * Math.PI);
+    drawCircle(
+      ctx,
+      ctx.canvas.width / 2,
+      ctx.canvas.height / 2,
+      20 * Math.sin(frameCount * 0.05) ** 2
+    );
     ctx.fill();
   };
 
@@ -27,7 +35,7 @@ function App() {
             <h1>Genuary Starter</h1>
           </div>
         </div>
-        <Canvas draw={draw} />
+        <Canvas2D draw={draw} />
         <div style={{ display: 'flex', gap: '8px' }}>
           <CaptureButton />
           <FrameScrubberToggleButton />

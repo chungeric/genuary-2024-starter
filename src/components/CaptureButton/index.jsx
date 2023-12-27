@@ -2,9 +2,9 @@ import { useContext } from "react";
 import { CapturerContext } from "../../contexts/CapturerContext";
 
 const CaptureButton = () => {
-  const { recording, setRecording } = useContext(CapturerContext);
+  const { recording, setRecording, useScrubber } = useContext(CapturerContext);
   return (
-    <button type="button" onClick={() => setRecording(!recording)} disabled={recording}>
+    <button type="button" onClick={() => setRecording(!recording)} disabled={recording || useScrubber}>
       {recording ? "Recording frames..." : "Record frames"}
     </button>
   );
