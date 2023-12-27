@@ -13,44 +13,63 @@
   <Canvas draw={draw} />
 */
 
-import { useEffect, useRef } from "react"
-import { resizeCanvas } from "./helpers/resizeCanvas";
+import { useContext, useEffect, useRef } from 'react';
+import { resizeCanvas } from './helpers/resizeCanvas';
+import { CapturerContext } from '../../contexts/CapturerContext';
 
 const Canvas = (props) => {
   const { draw, ...rest } = props;
-  const canvasRef = useRef(null)
+  const canvasRef = useRef(null);
+  const { recording, setRecording, capturer } = useContext(CapturerContext);
 
   // Render loop
   useEffect(() => {
     const canvas = canvasRef.current;
     const context = canvas.getContext('2d');
     let frameCount = 0;
+    let capturedFrames = 0;
     let raf;
     const render = () => {
-      frameCount++;
+      if (recording && capturedFrames === 0) {
+        capturer.start();
+      }
+
       draw(context, frameCount);
+      frameCount++;
+
+      if (recording) {
+        capturedFrames++;
+        capturer.capture(canvas);
+        if (capturedFrames >= 60) {
+          setRecording(false);
+          capturedFrames = 0;
+          capturer.stop();
+          capturer.save();
+        }
+      }
       raf = requestAnimationFrame(render);
-    }
+    };
     render();
     return () => {
-      cancelAnimationFrame(raf)
-    }
-  }, [draw]);
+      capturer.stop();
+      cancelAnimationFrame(raf);
+    };
+  }, [draw, capturer, recording, setRecording]);
 
   // Resize
   useEffect(() => {
     const canvas = canvasRef.current;
     const onResize = () => {
-      resizeCanvas(canvas)
-    }
+      resizeCanvas(canvas);
+    };
     onResize();
     window.addEventListener('resize', onResize);
     return () => {
       window.removeEventListener('resize', onResize);
-    }
+    };
   }, []);
-  
-  return <canvas ref={canvasRef} {...rest} />
-}
+
+  return <canvas ref={canvasRef} {...rest} />;
+};
 
 export default Canvas;
