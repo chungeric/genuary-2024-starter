@@ -6,7 +6,7 @@ export const NUM_FRAMES = 60;
 export const CapturerContext = createContext(null);
 
 const getNewCapturer = () => {
-  // eslint-disable-next-line no-undef
+  const { CCapture } = window;
   let capturer = new CCapture({
     format: 'gif',
     workersPath: 'src/ccapture/',
