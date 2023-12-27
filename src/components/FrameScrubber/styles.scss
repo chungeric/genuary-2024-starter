@@ -1,5 +1,11 @@
-.frame-scrubber {
+.frame-scrubber__input {
   width: 400px;
+}
+
+.frame-input {
+  &:focus {
+    outline: none;
+  }
 }
 
 .rangeslider {
