@@ -7,26 +7,3 @@
     outline: none;
   }
 }
-
-.rangeslider {
-  margin: 10px 0;
-  background: #a2cbf4;
-  &.rangeslider-horizontal {
-    height: 4px;
-  }
-  .rangeslider__handle {
-    background: #1976d2;
-    border: 0;
-    width: 16px;
-    height: 16px;
-    &:after {
-      display: none;
-    }
-  }
-  .rangeslider__fill {
-    background-color: #1976d2;
-  }
-  .rangeslider__handle-tooltip {
-    user-select: none;
-  }
-}
