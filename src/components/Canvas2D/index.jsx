@@ -1,22 +1,11 @@
 /* ref: https://medium.com/@pdx.lucasm/canvas-with-react-js-32e133c05258 */
-/*
-  Example usage:
-  const draw = (ctx, frameCount) => {
-    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
-    ctx.fillStyle = '#000000'
-    ctx.beginPath()
-    ctx.arc(200, 200, 20*Math.sin(frameCount*0.05)**2, 0, 2*Math.PI)
-    ctx.fill()
-  }
-  <Canvas draw={draw} />
-*/
 
 import { useContext, useEffect, useRef } from 'react';
 import { resizeCanvas } from './helpers/resizeCanvas';
 import { CapturerContext, NUM_FRAMES } from '../../contexts/CapturerContext';
+import sketch from './sketch';
 
-const Canvas2D = (props) => {
-  const { draw, ...rest } = props;
+const Canvas2D = () => {
   const canvasRef = useRef(null);
   const { recording, setRecording, capturer, scrubberFrame, useScrubber } = useContext(CapturerContext);
 
@@ -33,7 +22,7 @@ const Canvas2D = (props) => {
           capturer.start();
         }
 
-        draw(context, frameCount);
+        sketch(context, frameCount);
         frameCount++;
 
         if (recording) {
@@ -54,9 +43,9 @@ const Canvas2D = (props) => {
         cancelAnimationFrame(raf);
       };
     } else {
-      draw(context, scrubberFrame);
+      sketch(context, scrubberFrame);
     }
-  }, [draw, capturer, recording, setRecording, useScrubber, scrubberFrame]);
+  }, [capturer, recording, setRecording, useScrubber, scrubberFrame]);
 
   // Resize
   useEffect(() => {
@@ -71,7 +60,7 @@ const Canvas2D = (props) => {
     };
   }, []);
 
-  return <canvas ref={canvasRef} {...rest} />;
+  return <canvas ref={canvasRef} style={{ width: '400px', height: '400px' }} />;
 };
 
 export default Canvas2D;
