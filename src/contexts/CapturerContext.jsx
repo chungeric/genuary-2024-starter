@@ -8,8 +8,8 @@ export const CapturerContext = createContext(null);
 const getNewCapturer = () => {
   const { CCapture } = window;
   let capturer = new CCapture({
-    format: 'gif',
-    workersPath: 'src/ccapture/',
+    format: 'webm',
+    workersPath: 'src/ccapture/', // gif worker path
     verbose: true,
     framerate: FPS,
   });

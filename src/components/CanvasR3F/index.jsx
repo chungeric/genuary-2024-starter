@@ -2,7 +2,7 @@ import { useContext, useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrthographicCamera, OrbitControls } from '@react-three/drei';
 import { CapturerContext, NUM_FRAMES } from '../../contexts/CapturerContext';
-import "./CustomShaderMaterial";
+import './CustomShaderMaterial';
 
 let capturedFrames = 0;
 
@@ -45,14 +45,39 @@ const Box = (props) => {
 };
 
 const Shader = (props) => {
-  const meshRef = useRef();
+  const customShaderRef = useRef();
+  const { recording, setRecording, capturer, scrubberFrame, useScrubber } = useContext(CapturerContext);
+  useFrame((state, delta) => {
+    if (!useScrubber) {
+      if (recording && capturedFrames === 0) {
+        capturer.start();
+        customShaderRef.current.uTime = 0;
+      }
+
+      customShaderRef.current.uTime += delta;
+
+      if (recording) {
+        capturedFrames++;
+        capturer.capture(state.gl.domElement);
+        if (capturedFrames >= NUM_FRAMES) {
+          setRecording(false);
+          capturedFrames = 0;
+          capturer.stop();
+          capturer.save();
+        }
+      }
+    } else {
+      // approximating delta as 0.016
+      customShaderRef.current.uTime = 0.016 * scrubberFrame;
+    }
+  });
   return (
-    <mesh {...props} ref={meshRef}>
+    <mesh {...props}>
       <planeGeometry args={[2, 2, 6, 6]} />
-      <customShaderMaterial />
+      <customShaderMaterial ref={customShaderRef} />
     </mesh>
   );
-}
+};
 
 const CanvasR3F = () => {
   return (
@@ -64,15 +89,7 @@ const CanvasR3F = () => {
       >
         <color attach="background" args={['white']} />
         {/* <OrbitControls /> */}
-        {/* <OrthographicCamera
-          makeDefault
-          left={-1}
-          right={1}
-          top={1}
-          bottom={-1}
-          near={-1}
-          far={1}
-        /> */}
+        {/* <OrthographicCamera makeDefault left={-1} right={1} top={1} bottom={-1} near={-1} far={1} /> */}
         <Box />
         {/* <Shader /> */}
       </Canvas>
