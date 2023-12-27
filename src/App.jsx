@@ -2,6 +2,7 @@ import { CapturerProvider } from "./contexts/CapturerContext";
 import reactLogo from "./assets/react.svg";
 import Canvas2D from "./components/Canvas2D";
 import CanvasP5 from "./components/CanvasP5";
+import CanvasR3F from "./components/CanvasR3F";
 import CaptureButton from "./components/CaptureButton";
 import FrameScrubber from "./components/FrameScrubber";
 import FrameScrubberToggleButton from "./components/FrameScrubberToggleButton";
@@ -20,7 +21,8 @@ function App() {
           </div>
         </div>
         {/* <Canvas2D /> */}
-        <CanvasP5 />
+        {/* <CanvasP5 /> */}
+        <CanvasR3F />
         <div style={{ display: 'flex', gap: '8px' }}>
           <CaptureButton />
           <FrameScrubberToggleButton />
