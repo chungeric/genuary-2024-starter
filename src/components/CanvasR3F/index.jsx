@@ -3,8 +3,6 @@ import { OrthographicCamera, OrbitControls } from '@react-three/drei';
 import Box from './Box';
 import Shader from './Shader';
 
-import './CustomShaderMaterial';
-
 const CanvasR3F = () => {
   return (
     <div style={{ width: '400px', height: '400px' }}>

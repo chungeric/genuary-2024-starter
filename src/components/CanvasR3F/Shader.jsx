@@ -2,6 +2,8 @@ import { useContext, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import { CapturerContext, NUM_FRAMES } from "../../contexts/CapturerContext";
 
+import './CustomShaderMaterial';
+
 let capturedFrames = 0;
 
 const Shader = (props) => {
