@@ -4,7 +4,7 @@
 import { useContext, useEffect, useRef } from 'react';
 import p5 from 'p5';
 import { CapturerContext, NUM_FRAMES } from '../../contexts/CapturerContext';
-import sketch from './sketch';
+import { draw, setup } from './sketch';
 
 const CanvasP5 = () => {
   const ref = useRef(null);
@@ -16,7 +16,7 @@ const CanvasP5 = () => {
     const p5Sketch = (s) => {
       let capturedFrames = 0;
       s.setup = () => {
-        s.createCanvas(400, 400);
+        setup(s);
         if (useScrubber) {
           s.noLoop();
         }
@@ -27,7 +27,7 @@ const CanvasP5 = () => {
             capturer.start();
           }
   
-          sketch(s, s.frameCount);
+          draw(s, s.frameCount);
   
           if (recording) {
             capturedFrames++;
@@ -40,7 +40,7 @@ const CanvasP5 = () => {
             }
           }
         } else {
-          sketch(s, scrubberFrame);
+          draw(s, scrubberFrame);
         }
       };
     }

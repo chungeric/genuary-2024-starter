@@ -1,4 +1,8 @@
-const sketch = (s, frameCount) => {
+export const setup = (s) => {
+  s.createCanvas(400, 400);
+}
+
+export const draw = (s, frameCount) => {
   s.background(255);
   s.strokeWeight(1.3);
   s.stroke('red');
@@ -9,5 +13,3 @@ const sketch = (s, frameCount) => {
   // s.rotateY(frameCount * 0.01);
   // s.box(50);
 }
-
-export default sketch;
